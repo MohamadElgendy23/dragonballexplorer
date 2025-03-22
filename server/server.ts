@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const cors = require("cors");
-const dragonballRoutes = require("./routes/dragonballRoutes")
+import cors from "cors";
+import {dragonballRouter as dragonballRoutes} from "./routes/dragonballRoutes";
 const PORT = 3000;
 
 app.use(cors());

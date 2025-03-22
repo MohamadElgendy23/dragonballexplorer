@@ -1,11 +1,10 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
-  "main": "server.ts",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server.ts",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,6 +14,11 @@
     "axios": "^1.8.4",
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1"
   }
 }

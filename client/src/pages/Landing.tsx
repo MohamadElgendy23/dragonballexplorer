@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import Character from '../components/Character';
+import {getCharacters} from "../"
 function Landing() {
   
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
-    
-
+    getCharacters()
 }, [])
     
   return (

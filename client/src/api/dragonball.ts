@@ -1,7 +1,8 @@
 /*
 This file contains methods to make the API calls for the endpoints needed for this project.
 */
-import axios, { Axios, AxiosResponse } from "axios";
+
+import axios, { AxiosResponse } from "axios";
 
 const baseURL = "http://localhost:3000/dragonball";
 
@@ -9,7 +10,7 @@ const baseURL = "http://localhost:3000/dragonball";
 export async function getCharacters() {
     try {
         const response: AxiosResponse = await axios.get(`${baseURL}/characters`);
-        const charactersData = await response.data;
+        const charactersData = await response.data.items;
         return charactersData;
       } catch (error) {
         console.error(error);
@@ -33,7 +34,7 @@ export async function getPlanets() {
 }
 
 // gets one planet by id
-export async function getPlanet(planetId) {
+export async function getPlanet(planetId:String) {
 
 }
 

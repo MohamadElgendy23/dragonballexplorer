@@ -1,15 +1,7 @@
 import React from 'react'
+import { PlanetProp } from '../props/dragonball'
 
-// defines the planet prop
-interface PlanetProp {
-    name: string;
-    isDestroyed: boolean;
-    description: string;
-    image: string;
-    deletedAt: null;
-}
-
-function Planet({planet}:PlanetProp) {
+function Planet({...planet}:PlanetProp) {
   return (
     <div>Planet</div>
   )

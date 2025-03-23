@@ -42,7 +42,7 @@ exports.dragonballRouter = void 0;
 const axios_1 = __importDefault(require("axios"));
 const express_1 = __importDefault(require("express"));
 exports.dragonballRouter = express_1.default.Router();
-const baseURL = "https://www.dragonball-api.com/api";
+const baseURL = "https://dragonball-api.com/api";
 exports.dragonballRouter.get("/characters", (req, res) =>
   __awaiter(void 0, void 0, void 0, function* () {
     try {

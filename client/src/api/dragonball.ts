@@ -7,9 +7,9 @@ import axios, { AxiosResponse } from "axios";
 const baseURL = "http://localhost:3000/dragonball";
 
 // gets all characters
-export async function getCharacters() {
+export async function getCharacters(page:Number, limit:Number) {
     try {
-        const response: AxiosResponse = await axios.get(`${baseURL}/characters`);
+        const response: AxiosResponse = await axios.get(`${baseURL}/characters?page=${page}&limit=${limit}`);
         const charactersData = await response.data.items;
         return charactersData;
       } catch (error) {
@@ -23,9 +23,9 @@ export async function getCharacter(characterId:String) {
 }
 
 // gets all planets
-export async function getPlanets() {
+export async function getPlanets(page:Number, limit:Number) {
     try {
-        const response: AxiosResponse = await axios.get(`${baseURL}/planets`);
+        const response: AxiosResponse = await axios.get(`${baseURL}/planets?page=${page}&limit=${limit}`);
         const planetsData = await response.data;
         return planetsData;
       } catch (error) {

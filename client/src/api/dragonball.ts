@@ -10,7 +10,7 @@ const baseURL = "http://localhost:3000/dragonball";
 export async function getCharacters(page:Number, limit:Number) {
     try {
         const response: AxiosResponse = await axios.get(`${baseURL}/characters?page=${page}&limit=${limit}`);
-        const charactersData = await response.data.items;
+        const charactersData = await response.data;
         return charactersData;
       } catch (error) {
         console.error(error);

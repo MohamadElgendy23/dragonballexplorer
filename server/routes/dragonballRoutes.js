@@ -45,11 +45,27 @@ exports.dragonballRouter = express_1.default.Router();
 const baseURL = "https://dragonball-api.com/api";
 exports.dragonballRouter.get("/characters", (req, res) =>
   __awaiter(void 0, void 0, void 0, function* () {
+    const { page, limit } = req.query;
     try {
-      const response = yield axios_1.default.get(`${baseURL}/characters`);
-      const charactersData = yield response.data;
-      console.log(charactersData);
+      const response = yield axios_1.default.get(
+        `${baseURL}/characters?page=${page}&limit=${limit}`
+      );
+      const charactersData = yield response.data.items;
       res.status(200).send(charactersData);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+);
+exports.dragonballRouter.get("/planets", (req, res) =>
+  __awaiter(void 0, void 0, void 0, function* () {
+    const { page, limit } = req.query;
+    try {
+      const response = yield axios_1.default.get(
+        `${baseURL}/planets?page=${page}&limit=${limit}`
+      );
+      const planetsData = yield response.data.items;
+      res.status(200).send(planetsData);
     } catch (error) {
       console.log(error);
     }

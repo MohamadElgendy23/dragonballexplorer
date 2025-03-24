@@ -6,12 +6,11 @@ import Loading from '../components/Loading';
 
 function Landing() {
   const [characters, setCharacters] = useState<CharacterProp[]>([]);
-  const [page, setPage] = useState<Number>(0);
+  const [page, setPage] = useState<Number>(1);
   const [charactersLoading, setCharactersLoading] = useState<Boolean>(false);
 
   useEffect(() => {
     getCharacters(page, 4).then(charactersData => {
-        console.log(charactersData);
         setCharactersLoading(true);
         setCharacters(prevCharacters => [...prevCharacters, ...charactersData]);
         setCharactersLoading(false);

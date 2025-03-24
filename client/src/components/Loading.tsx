@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Loading({type}:String) {
+function Loading(type:String) {
   return (
     <div className="flex flex-col justify-center items-center gap-3 z-1">
       <h2>{`Scroll down for more ${type}`}</h2>

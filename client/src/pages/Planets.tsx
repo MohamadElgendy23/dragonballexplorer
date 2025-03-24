@@ -6,14 +6,37 @@ import Loading from '../components/Loading';
 
 function Planets() {
   const [planets, setPlanets] = useState<PlanetProp[]>([]);
+  const [page, setPage] = useState<number>(0);
   const [planetsLoading, setPlanetsLoading] = useState<boolean>(false);
+  const maxPages = 2;  
 
-  useEffect(() => {
-    getPlanets().then(planetsData => {
-        console.log(planetsData);
-        setPlanets(planetsData);
-    });
-}, [])
+  
+    // this function handles the scroll event 
+    function handleScroll() {
+      const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 200;
+      if (!planetsLoading && bottom && page <= maxPages) {
+          setPage((prevPage) => {
+              const nextPage = prevPage+1;
+              if (nextPage > maxPages)
+              {
+                  return prevPage;
+              }
+              setPlanetsLoading(true);
+              getPlanets(nextPage, 4).then(planetsData => {
+                  setPlanets(prevPlanets => [...prevPlanets, ...planetsData]);
+                  setPlanetsLoading(false);
+              });
+              return nextPage;
+          });
+      }
+    }
+  
+    useEffect(() => {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+          window.removeEventListener("scroll", handleScroll);
+      };
+  }, []);
 
   return (
     <div className="flex flex-col items-center bg-[#272b33] min-w-full min-h-screen">

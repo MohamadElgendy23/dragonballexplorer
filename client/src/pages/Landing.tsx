@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Character from '../components/Character';
 import { CharacterProp } from '../props/dragonball';
 import {getCharacters} from "../api/dragonball";
@@ -6,16 +6,36 @@ import Loading from '../components/Loading';
 
 function Landing() {
   const [characters, setCharacters] = useState<CharacterProp[]>([]);
-  const [page, setPage] = useState<Number>(1);
-  const [charactersLoading, setCharactersLoading] = useState<Boolean>(false);
+  const [page, setPage] = useState<number>(0);
+  const [charactersLoading, setCharactersLoading] = useState<boolean>(false);
+  const maxPages = 6;  
+
+  // this function handles the scroll event 
+  function handleScroll() {
+    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 200;
+    if (!charactersLoading && bottom && page <= maxPages) {
+        setPage((prevPage) => {
+            const nextPage = prevPage+1;
+            if (nextPage > maxPages)
+            {
+                return prevPage;
+            }
+            setCharactersLoading(true);
+            getCharacters(nextPage, 4).then(charactersData => {
+                setCharacters(prevCharacters => [...prevCharacters, ...charactersData]);
+                setCharactersLoading(false);
+            });
+            return nextPage;
+        });
+    }
+  }
 
   useEffect(() => {
-    getCharacters(page, 4).then(charactersData => {
-        setCharactersLoading(true);
-        setCharacters(prevCharacters => [...prevCharacters, ...charactersData]);
-        setCharactersLoading(false);
-    });
-}, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+        window.removeEventListener("scroll", handleScroll);
+    };
+}, []);
 
   return (
     <div className="flex flex-col items-center bg-[#272b33] min-w-full min-h-screen">

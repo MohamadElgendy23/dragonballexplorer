@@ -3,12 +3,14 @@ import Character from '../components/Character';
 import { CharacterProp } from '../props/dragonball';
 import {getCharacters} from "../api/dragonball";
 import Loading from '../components/Loading';
+
 function Landing() {
   const [characters, setCharacters] = useState<CharacterProp[]>([]);
   const [charactersLoading, setCharactersLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getCharacters().then(charactersData => {
+        console.log(charactersData);
         setCharacters(charactersData);
     });
 }, [])

@@ -5,8 +5,9 @@ export const dragonballRouter = express.Router();
 const baseURL = "https://dragonball-api.com/api";
 
 dragonballRouter.get("/characters", async (req: Request, res: Response) => {
+    const { page, limit } = req.query;
     try {
-        const response: AxiosResponse = await axios.get(`${baseURL}/characters`);
+        const response: AxiosResponse = await axios.get(`${baseURL}/characters?`);
         const charactersData = await response.data.items;
         res.status(200).send(charactersData.items);
     }

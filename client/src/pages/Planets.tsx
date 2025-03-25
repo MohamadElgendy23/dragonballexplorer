@@ -3,16 +3,17 @@ import Planet from '../components/Planet';
 import { PlanetProp } from '../props/dragonball';
 import {getPlanets} from "../api/dragonball";
 import Loading from '../components/Loading';
+import { debounce } from '../helper/debounce';
 
 function Planets() {
   const [planets, setPlanets] = useState<PlanetProp[]>([]);
   const [page, setPage] = useState<number>(0);
   const [planetsLoading, setPlanetsLoading] = useState<boolean>(false);
-  const maxPages = 2;  
+  const maxPages = 5;  
 
   
     // this function handles the scroll event 
-    function handleScroll() {
+    const handleScroll = debounce(() => {
       const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 200;
       if (!planetsLoading && bottom && page <= maxPages) {
           setPage((prevPage) => {
@@ -29,7 +30,7 @@ function Planets() {
               return nextPage;
           });
       }
-    }
+    }, 200);
   
     useEffect(() => {
       window.addEventListener("scroll", handleScroll);

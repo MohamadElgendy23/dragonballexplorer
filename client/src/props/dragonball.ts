@@ -1,5 +1,5 @@
 // defines the character prop
-export interface CharacterProp {
+export interface CharacterProps {
     name: string;
     ki: string;
     maxKi: string;
@@ -12,7 +12,7 @@ export interface CharacterProp {
 }
 
 // defines the planet prop
-export interface PlanetProp {
+export interface PlanetProps {
     name: string;
     isDestroyed: boolean;
     description: string;

@@ -3,7 +3,7 @@ import { CharacterProps } from "../props/dragonball";
 
 function Character({ ...character }: CharacterProps) {
   return (
-    <div className="flex flex-col w-[300px] bg-[#3c3e44] rounded-l-lg m-3 cursor-pointer shadow-md transform-none">
+    <div className="flex flex-col w-[300px] h-[700px] bg-[#3c3e44] rounded-l-lg m-3 cursor-pointer shadow-md transform-none">
       <div className="w-full relative bg-[url(https://web.dragonball-api.com/images-compress/89980.webp)] bg-center bg-cover min-h-[350px] max-h-[350px] rounded-tl-lg rounded-tr-lg">
         <img
           src={`${character.image}`}
@@ -21,19 +21,19 @@ function Character({ ...character }: CharacterProps) {
           </p>
         </div>
         <div className="flex flex-col gap-2 m-0 tracking-[0.00938em] leading-[0.5]">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <p className="font-bold text-[#F5F5F5] text-3xl]">Base KI:</p>
             <span className="font-semibold text-[#FBC02D] text-xl">
               {character.ki}
             </span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <p className="font-bold text-[#F5F5F5] text-3xl]">Total KI:</p>
             <span className="font-semibold text-[#FBC02D] text-xl">
               {character.maxKi}
             </span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <p className="font-bold text-[#F5F5F5] text-3xl]">Affiliation:</p>
             <span className="font-semibold text-[#FBC02D] text-xl">
               {character.affiliation}

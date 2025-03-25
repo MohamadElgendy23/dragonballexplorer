@@ -1,44 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Character from "../components/Character";
 import { CharacterProps } from "../props/dragonball";
 import { getCharacters } from "../api/dragonball";
 import Loading from "../components/Loading";
-import { debounce } from "../helper/debounce";
 
 function Landing() {
   const [characters, setCharacters] = useState<CharacterProps[]>([]);
-  const [page, setPage] = useState<number>(0);
+  const pageRef = useRef<number>(0);
   const [charactersLoading, setCharactersLoading] = useState<boolean>(false);
   const maxPages = 15;
 
   useEffect(() => {
     // this function handles the scroll event using debounce
-    const handleScroll = debounce(() => {
+    const handleScroll = () => {
       const bottom =
         Math.ceil(window.innerHeight + window.scrollY) >=
         document.documentElement.scrollHeight - 200;
-      if (!charactersLoading && bottom && page <= maxPages) {
-        setPage((prevPage) => {
-          const nextPage = prevPage + 1;
-          console.log(nextPage);
-          if (nextPage > maxPages) {
-            return prevPage;
-          }
-          setCharactersLoading(true);
-          getCharacters(nextPage, 4).then((charactersData) => {
-            setCharacters((prevCharacters) => [
-              ...prevCharacters,
-              ...charactersData,
-            ]);
-            setCharactersLoading(false);
-          });
-          return nextPage;
+      const currPage = pageRef.current;
+      if (!charactersLoading && bottom && currPage <= maxPages) {
+        const nextPage = currPage + 1;
+        if (nextPage > maxPages) {
+          return;
+        }
+        pageRef.current = nextPage;
+        setCharactersLoading(true);
+        getCharacters(nextPage, 4).then((charactersData) => {
+          setCharacters((prevCharacters) => [
+            ...prevCharacters,
+            ...charactersData,
+          ]);
+          setCharactersLoading(false);
         });
       }
-    }, 200);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => {
-      handleScroll.cancel(); // cancels debounce timeout
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);

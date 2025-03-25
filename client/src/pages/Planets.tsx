@@ -1,38 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Planet from "../components/Planet";
 import { PlanetProps } from "../props/dragonball";
 import { getPlanets } from "../api/dragonball";
 import Loading from "../components/Loading";
-import { debounce } from "../helper/debounce";
 
 function Planets() {
   const [planets, setPlanets] = useState<PlanetProps[]>([]);
-  const [page, setPage] = useState<number>(0);
+  const pageRef = useRef<number>(0);
   const [planetsLoading, setPlanetsLoading] = useState<boolean>(false);
   const maxPages = 5;
 
-  // this function handles the scroll event
-  const handleScroll = debounce(() => {
-    const bottom =
-      Math.ceil(window.innerHeight + window.scrollY) >=
-      document.documentElement.scrollHeight - 200;
-    if (!planetsLoading && bottom && page <= maxPages) {
-      setPage((prevPage) => {
-        const nextPage = prevPage + 1;
+  useEffect(() => {
+    // this function handles the scroll event
+    const handleScroll = () => {
+      const bottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight - 200;
+      const currPage = pageRef.current;
+      if (!planetsLoading && bottom && currPage <= maxPages) {
+        const nextPage = currPage + 1;
         if (nextPage > maxPages) {
-          return prevPage;
+          return;
         }
+        pageRef.current = nextPage;
         setPlanetsLoading(true);
         getPlanets(nextPage, 4).then((planetsData) => {
           setPlanets((prevPlanets) => [...prevPlanets, ...planetsData]);
           setPlanetsLoading(false);
         });
         return nextPage;
-      });
-    }
-  }, 200);
+      }
+    };
 
-  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
